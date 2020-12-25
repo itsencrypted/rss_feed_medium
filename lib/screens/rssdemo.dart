@@ -130,15 +130,15 @@ class RSSDemoState extends State<RSSDemo> {
   // null };
 
   list() {
-    final postList = _feed.items[index];
+    final item = _feed.items[index];
+    final postList = _feed.items.where((element) => item.categories.length > 0);
 
-    if (_feed.items[index].categories.length > 0) {
+    if (_feed.items[index].categories.length == 0) {
       return ListView.builder(
         itemCount: _feed.items.length,
         itemBuilder: (BuildContext context, int index) {
-          final item = _feed.items[index];
-          // final item = postList.items[index];
-          // final postList = _feed.items.take(item => item.categories.length > 0);
+          
+          final item = postList.items[index];
           return ListTile(
             title: title(item.title),
             subtitle: pubdate(item.pubDate),
@@ -151,7 +151,7 @@ class RSSDemoState extends State<RSSDemo> {
       );
     } //final do meu if correto
     else {
-      return null;
+      return Text('Errei aqui');
     }
   }
  
@@ -173,10 +173,10 @@ class RSSDemoState extends State<RSSDemo> {
  
   @override
   Widget build(BuildContext context) {
-    print(_feed.items.length);
-    print(_feed.items[3].categories.length);
-    print(_feed.items[3].title);
-    print(_feed.items[3].content.value);
+    // print(_feed.items.length);
+    // print(_feed.items[3].categories.length);
+    // print(_feed.items[3].title);
+    // print(_feed.items[3].content.value);
       return Scaffold(appBar: AppBar(
         title: Text(_title),
       ),
