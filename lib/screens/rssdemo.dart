@@ -21,6 +21,7 @@ class RSSDemoState extends State<RSSDemo> {
       'https://medium.com/feed/@itsencrypted';
   RssFeed _feed;
   String _title;
+  var index = 0;
   static const String loadingFeedMsg = 'Loading Feed...';
   static const String feedLoadErrorMsg = 'Error Loading Feed.';
   static const String feedOpenErrorMsg = 'Error Opening Feed.';
@@ -123,22 +124,35 @@ class RSSDemoState extends State<RSSDemo> {
       size: 30.0,
     );
   }
- 
+
+
+  // if (_feed.items[index].categories.length > 0) { list(){} } else { return
+  // null };
+
   list() {
-    return ListView.builder(
-      itemCount: _feed.items.length,
-      itemBuilder: (BuildContext context, int index) {
-        final item = _feed.items[index];
-        return ListTile(
-          title: title(item.title),
-          subtitle: pubdate(item.pubDate),
-          // leading: thumbnail(item.enclosure.url),
-          trailing: rightIcon(),
-          contentPadding: EdgeInsets.all(5.0),
-          onTap: () => openFeed(item.link),
-        );
-      },
-    );
+    final postList = _feed.items[index];
+
+    if (_feed.items[index].categories.length > 0) {
+      return ListView.builder(
+        itemCount: _feed.items.length,
+        itemBuilder: (BuildContext context, int index) {
+          final item = _feed.items[index];
+          // final item = postList.items[index];
+          // final postList = _feed.items.take(item => item.categories.length > 0);
+          return ListTile(
+            title: title(item.title),
+            subtitle: pubdate(item.pubDate),
+            // leading: thumbnail(item.enclosure.url),
+            trailing: rightIcon(),
+            contentPadding: EdgeInsets.all(5.0),
+            onTap: () => openFeed(item.link),
+          );
+        },
+      );
+    } //final do meu if correto
+    else {
+      return null;
+    }
   }
  
   isFeedEmpty() {
@@ -160,8 +174,9 @@ class RSSDemoState extends State<RSSDemo> {
   @override
   Widget build(BuildContext context) {
     print(_feed.items.length);
-    print(_feed.items[8].title);
-    print(_feed.items[1].content.value);
+    print(_feed.items[3].categories.length);
+    print(_feed.items[3].title);
+    print(_feed.items[3].content.value);
       return Scaffold(appBar: AppBar(
         title: Text(_title),
       ),
